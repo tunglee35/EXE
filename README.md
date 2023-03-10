@@ -10,7 +10,7 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 ## How to use the app (user)
-### Step 1: go to (landing page)[https://tuyendtse161478.wixsite.com/mysite]
+### Step 1: go to [landing page](https://tuyendtse161478.wixsite.com/mysite)
 
 ### Step 2: enter one of these prompt:
 * Current housing market in Vietnam
