@@ -10,7 +10,9 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 ## How to use the app (user)
-### Prompt to enter:
+### Step 1: go to (landing page)[https://tuyendtse161478.wixsite.com/mysite]
+
+### Step 2: enter one of these prompt:
 * Current housing market in Vietnam
 * Phu Quoc resort real estate market
 * Press release for real estate product in Phu Quoc

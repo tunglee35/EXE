@@ -26,7 +26,7 @@ class Topic(Enum):
     CLOSING_DEAL_FOR_A_500000_USD_RESORT_IN_PHU_QUOC = "Closing deal for a 500,000 USD resort in Phu Quoc"
 
 # mock generate text
-def generate_text(topic: str, mood: str = "", style: str = ""):
+def generate_text(topic: str, mood: str, style: str):
     """Generate Tweet text."""
     if st.session_state.n_requests >= 5:
         st.session_state.text_error = "Too many requests. Please wait a few seconds before generating another Tweet."
@@ -108,30 +108,14 @@ def render_demo():
     st.title("Generate content for your real estate business")
 
     topic = st.text_input(label="Topic (or hashtag)", placeholder="AI")
-    mood = st.text_input(
-        label="Mood (e.g. inspirational, funny, serious) (optional)",
-        placeholder="inspirational",
-    )
-    style = st.text_input(
-        label="Twitter account handle to style-copy recent Tweets (optional)",
-        placeholder="elonmusk",
-    )
+    
     col1, col2 = st.columns(2)
     with col1:
         st.session_state.feeling_lucky = not st.button(
             label="Generate text",
             type="primary",
             on_click=generate_text,
-            args=(topic, mood, style),
-        )
-    with col2:
-        with open("moods.txt") as f:
-            sample_moods = f.read().splitlines()
-        st.session_state.feeling_lucky = st.button(
-            label="Feeling lucky",
-            type="secondary",
-            on_click=generate_text,
-            args=("an interesting topic", random.choice(sample_moods), ""),
+            args=(topic, "", ""),
         )
 
     if st.session_state.text_error:
@@ -196,7 +180,7 @@ def render_demo():
             st.write("so I can keep it alive. Thank you!")
 
 def render_doc():
-    doc = open('./README.md').read()
+    doc = open('./API.md').read()
     st.write(doc)
 
 def config_nav_style():
