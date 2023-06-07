@@ -1,12 +1,19 @@
 """Streamlit app to generate Tweets."""
 from st_on_hover_tabs import on_hover_tabs
 import streamlit as st
-from PIL import Image
 # Import from standard library
 import logging
-import random
 from enum import Enum
 import time
+import pdb
+from bardapi import Bard
+import os
+os.environ['_BARD_API_KEY']='XQh4bKIq8HK-lA5_SB7kikDJgCTziUz4pASEJ0y7dnp30YTr1oMJ2esSjRCv4XiAcv5IcQ.'
+
+bard = Bard()
+
+def get_answer(query):
+    return bard.get_answer(query)['content']
 
 # Import from 3rd party libraries
 import streamlit.components.v1 as components
@@ -34,29 +41,13 @@ def generate_text(topic: str, mood: str, style: str):
         st.session_state.n_requests = 1
         return
 
-    st.session_state.textarea = "text here"
-    st.session_state.tweet = ""
-    st.session_state.image = ""
-    st.session_state.text_error = ""
-
+    print(f'topic is #{topic}')
     if not topic:
-        st.session_state.text_error = "Please enter a topic"
+        st.session_state.text_error = "Please enter a question"
         return
     with text_spinner_placeholder:
-        with st.spinner("Please wait while your Tweet is being generated..."):
-            ans = ""
-            if topic == "Current housing market in Vietnam":
-                ans = open('./text_data/ans_1.txt').read()
-            elif topic == "Phu Quoc resort real estate market":
-                ans = open('./text_data/ans_2.txt').read()
-            elif topic == "Press release for real estate product in Phu Quoc":
-                ans = open('./text_data/ans_3.txt').read()
-            elif topic == "Sale letter for Phu Quoc resort real estate":
-                ans = open('./text_data/ans_4.txt').read()
-            elif topic == "Closing deal for a 500,000 USD resort in Phu Quoc":
-                ans = open('./text_data/ans_5.txt').read()
-
-            time.sleep(1)
+        with st.spinner("Please wait while your answer is being generated..."):
+            ans = get_answer(topic)
             st.session_state.text_error = ""
             st.session_state.n_requests += 1
             st.session_state.tweet = ans
@@ -105,14 +96,14 @@ def config_reponsive():
 
 # Render Streamlit page
 def render_demo():
-    st.title("Generate content for your real estate business")
+    st.title("Hello, I'm GradientGPT, how can I help you today?")
 
-    topic = st.text_input(label="Topic (or hashtag)", placeholder="AI")
+    topic = st.text_input(label="", placeholder="What to buy on my wife's birthday?")
     
     col1, col2 = st.columns(2)
     with col1:
         st.session_state.feeling_lucky = not st.button(
-            label="Generate text",
+            label="Ask",
             type="primary",
             on_click=generate_text,
             args=(topic, "", ""),
@@ -122,7 +113,6 @@ def render_demo():
         st.error(st.session_state.text_error)
 
     if st.session_state.tweet:
-        st.markdown("# Generated content")
         st.markdown(f"""
         {st.session_state.tweet}
         """)
@@ -136,24 +126,24 @@ def render_demo():
                 height=45,
             )
 
-        if not st.session_state.image:
-            st.button(
-                label="Generate image",
-                type="primary",
-                on_click=generate_image,
-                args=[st.session_state.tweet],
-            )
-        else:
-            st.image(st.session_state.image)
-            st.button(
-                label="Regenerate image",
-                type="secondary",
-                on_click=generate_image,
-                args=[st.session_state.tweet],
-            )
+        # if not st.session_state.image:
+        #     st.button(
+        #         label="Generate image",
+        #         type="primary",
+        #         on_click=generate_image,
+        #         args=[st.session_state.tweet],
+        #     )
+        # else:
+        #     st.image(st.session_state.image)
+        #     st.button(
+        #         label="Regenerate image",
+        #         type="secondary",
+        #         on_click=generate_image,
+        #         args=[st.session_state.tweet],
+        #     )
 
-        if st.session_state.image_error:
-            st.error(st.session_state.image_error)
+        # if st.session_state.image_error:
+        #     st.error(st.session_state.image_error)
 
         st.markdown("""---""")
         col1, col2 = st.columns(2)
@@ -183,6 +173,10 @@ def render_doc():
     doc = open('./API.md').read()
     st.write(doc)
 
+def render_payment():
+    doc = open('./Payment.md').read()
+    st.write(doc)
+
 def config_nav_style():
     st.markdown('<style>' + open('./style.css').read() + '</style>', unsafe_allow_html=True)
 
@@ -192,14 +186,16 @@ config_nav_style()
 
 # sidebar
 with st.sidebar:
-    tabs = on_hover_tabs(tabName=['Demo', 'Doc'],
-                        iconName=['dashboard', 'economy'],
+    tabs = on_hover_tabs(tabName=['Demo', 'Doc', 'Payment'],
+                        iconName=['dashboard', 'economy', 'money'],
                         default_choice=0)
 
 if tabs =='Demo':
     render_demo()
 elif tabs =='Doc':
     render_doc()
+elif tabs =='Payment':
+    render_payment()
 # -----
 
 

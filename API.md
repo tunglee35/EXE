@@ -1,8 +1,8 @@
-# Whisper AI Documentation
+# Nano Gradient AI Documentation
 
 ## Introduction
 
-Welcome to the Whisper AI documentation! This document will provide a comprehensive guide on how to use different APIs offered by Whisper AI to help you develop intelligent voice assistants.
+Welcome to the Nano Gradient AI documentation! This document will provide a comprehensive guide on how to use different APIs offered by Whisper AI to help you develop intelligent voice assistants.
 
 ## API List
 
