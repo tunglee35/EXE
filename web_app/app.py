@@ -8,7 +8,7 @@ import time
 import pdb
 from bardapi import Bard
 import os
-os.environ['_BARD_API_KEY']='XQh4bKIq8HK-lA5_SB7kikDJgCTziUz4pASEJ0y7dnp30YTr1oMJ2esSjRCv4XiAcv5IcQ.'
+os.environ['BARD_COOKIE']='XQh4bKIq8HK-lA5_SB7kikDJgCTziUz4pASEJ0y7dnp30YTr1oMJ2esSjRCv4XiAcv5IcQ.'
 
 bard = Bard()
 
