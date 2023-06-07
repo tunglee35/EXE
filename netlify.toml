@@ -3,5 +3,4 @@
   publish = "public"
 
 [build.environment]
-  PYTHON_VERSION = '3'
   BARD_COOKIE = "XQh4bKIq8HK-lA5_SB7kikDJgCTziUz4pASEJ0y7dnp30YTr1oMJ2esSjRCv4XiAcv5IcQ."
