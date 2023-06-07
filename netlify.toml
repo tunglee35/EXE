@@ -1,5 +1,5 @@
 [build]
-  command = "cd web_app && streamlit run app.py --server.port 8888"
+  command = "streamlit run app.py --server.port 8888"
   publish = "public"
 
 [build.environment]
